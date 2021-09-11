@@ -1,5 +1,9 @@
+import os
+import socket
+import struct
+import datetime
+
 import pyzed.sl as sl
-import socket, struct
 
 
 def main():
@@ -38,7 +42,7 @@ def main():
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    while True:
+    while i < 200:
         if zed.grab(runtime_parameters) == sl.ERROR_CODE.SUCCESS:
             # Get the pose of the left eye of the camera with reference to the world frame
             zed.get_position(zed_pose, sl.REFERENCE_FRAME.WORLD)
@@ -71,9 +75,24 @@ def main():
             payload = struct.pack("7f", *position)
             sock.sendto(payload, (IP, PORT))
             print(struct.unpack("7f", payload), end="\r")
+        else:
+            print(zed.grab(runtime_parameters))
+        i += 1
 
-    # Close the camera
+    # Close the camera and safe map
+    area_file = "./area/" + datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + ".area"
+
+    if not os.path.isdir("./area"):
+        os.makedirs("./area", exist_ok=True)
+
+    zed.save_area_map(area_file)
+
     zed.close()
+
+    if os.path.isfile(area_file):
+        print("Area file written: " + area_file)
+    else:
+        print("Area file could not be written")
 
 
 if __name__ == "__main__":
