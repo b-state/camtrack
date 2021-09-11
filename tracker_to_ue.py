@@ -10,7 +10,7 @@ def main():
     init_params = sl.InitParameters()
     init_params.camera_resolution = sl.RESOLUTION.HD720  # Use HD720 video mode (default fps: 60)
     # Use a right-handed Y-up coordinate system
-    init_params.coordinate_system = sl.COORDINATE_SYSTEM.RIGHT_HANDED_Y_UP
+    init_params.coordinate_system = sl.COORDINATE_SYSTEM.LEFT_HANDED_Z_UP
     init_params.coordinate_units = sl.UNIT.METER  # Set units in meters
 
     # Open the camera
@@ -33,7 +33,7 @@ def main():
 
     position = [0, 0, 0, 0, 0, 0, 0]
     orientation = [0, 0, 0, 0]
-    IP = "127.0.0.1"
+    IP = "192.168.178.31"
     PORT = 9696
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
