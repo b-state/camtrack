@@ -35,49 +35,51 @@ def main():
     zed_sensors = sl.SensorsData()
     runtime_parameters = sl.RuntimeParameters()
 
-    position = [0, 0, 0, 0, 0, 0, 0]
-    orientation = [0, 0, 0, 0]
-    IP = "192.168.178.31"
-    PORT = 9696
+    position = [0]*7
+    ip = "192.168.178.31"
+    port = 9696
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    while i < 200:
-        if zed.grab(runtime_parameters) == sl.ERROR_CODE.SUCCESS:
-            # Get the pose of the left eye of the camera with reference to the world frame
-            zed.get_position(zed_pose, sl.REFERENCE_FRAME.WORLD)
-            zed.get_sensors_data(zed_sensors, sl.TIME_REFERENCE.IMAGE)
-            zed_imu = zed_sensors.get_imu_data()
+    try:
+        while True:
+            if zed.grab(runtime_parameters) == sl.ERROR_CODE.SUCCESS:
+                # Get the pose of the left eye of the camera with reference to the world frame
+                zed.get_position(zed_pose, sl.REFERENCE_FRAME.WORLD)
+                zed.get_sensors_data(zed_sensors, sl.TIME_REFERENCE.IMAGE)
+                zed_imu = zed_sensors.get_imu_data()
 
-            # Display the translation and timestamp
-            py_translation = sl.Translation()
-            tx = round(zed_pose.get_translation(py_translation).get()[0], 3)
-            ty = round(zed_pose.get_translation(py_translation).get()[1], 3)
-            tz = round(zed_pose.get_translation(py_translation).get()[2], 3)
-            # print("Translation: Tx: {0}, Ty: {1}, Tz {2}, Timestamp: {3}".format(tx, ty, tz, zed_pose.timestamp.get_milliseconds()), end="\r")
+                # Display the translation and timestamp
+                py_translation = sl.Translation()
+                tx = round(zed_pose.get_translation(py_translation).get()[0], 3)
+                ty = round(zed_pose.get_translation(py_translation).get()[1], 3)
+                tz = round(zed_pose.get_translation(py_translation).get()[2], 3)
+                # print("Translation: Tx: {0}, Ty: {1}, Tz {2}, Timestamp: {3}".format(tx, ty, tz, zed_pose.timestamp.get_milliseconds()), end="\r")
 
-            # Display the orientation quaternion
-            py_orientation = sl.Orientation()
-            ox = round(zed_pose.get_orientation(py_orientation).get()[0], 3)
-            oy = round(zed_pose.get_orientation(py_orientation).get()[1], 3)
-            oz = round(zed_pose.get_orientation(py_orientation).get()[2], 3)
-            ow = round(zed_pose.get_orientation(py_orientation).get()[3], 3)
-            # print("Orientation: Ox: {0}, Oy: {1}, Oz {2}, Ow: {3}\n".format(ox, oy, oz, ow))
+                # Display the orientation quaternion
+                py_orientation = sl.Orientation()
+                ox = round(zed_pose.get_orientation(py_orientation).get()[0], 3)
+                oy = round(zed_pose.get_orientation(py_orientation).get()[1], 3)
+                oz = round(zed_pose.get_orientation(py_orientation).get()[2], 3)
+                ow = round(zed_pose.get_orientation(py_orientation).get()[3], 3)
+                # print("Orientation: Ox: {0}, Oy: {1}, Oz {2}, Ow: {3}\n".format(ox, oy, oz, ow))
 
-            position[0] = tx
-            position[1] = ty
-            position[2] = tz
-            position[3] = ox
-            position[4] = oy
-            position[5] = oz
-            position[6] = ow
+                position[0] = tx
+                position[1] = ty
+                position[2] = tz
+                position[3] = ox
+                position[4] = oy
+                position[5] = oz
+                position[6] = ow
 
-            payload = struct.pack("7f", *position)
-            sock.sendto(payload, (IP, PORT))
-            print(struct.unpack("7f", payload), end="\r")
-        else:
-            print(zed.grab(runtime_parameters))
-        i += 1
+                payload = struct.pack("7f", *position)
+                sock.sendto(payload, (ip, port))
+                print(struct.unpack("7f", payload), end="\r")
+            else:
+                print(zed.grab(runtime_parameters))
+        #i += 1
+    except KeyboardInterrupt:
+        pass
 
     # Close the camera and safe map
     area_file = "./area/" + datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + ".area"
