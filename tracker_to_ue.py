@@ -13,7 +13,6 @@ def main():
     # Create a InitParameters object and set configuration parameters
     init_params = sl.InitParameters()
     init_params.camera_resolution = sl.RESOLUTION.HD720  # Use HD720 video mode (default fps: 60)
-    # Use a right-handed Y-up coordinate system
     init_params.coordinate_system = sl.COORDINATE_SYSTEM.LEFT_HANDED_Z_UP
     init_params.coordinate_units = sl.UNIT.METER  # Set units in meters
 
@@ -29,7 +28,6 @@ def main():
     if err != sl.ERROR_CODE.SUCCESS:
         exit(1)
 
-    i = 0
     zed_pose = sl.Pose()
 
     zed_sensors = sl.SensorsData()
@@ -77,7 +75,6 @@ def main():
                 print(struct.unpack("7f", payload), end="\r")
             else:
                 print(zed.grab(runtime_parameters))
-        #i += 1
     except KeyboardInterrupt:
         pass
 
