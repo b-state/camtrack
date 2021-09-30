@@ -1,0 +1,31 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="text-center text-white content-box rounded-2 ">
+    <span>ZED will start capturing, check Unreal for position updates.</span>
+
+</div>
+
+
+
+    <form method="post">
+        <div class="d-grid capture_btn">
+        <input id="toggle" name="toggle" type="hidden" value="start">
+        <input class="btn btn-primary btn-lg btn-block" name="start_button" type="submit" value="Start"/>
+            </div>
+    </form>
+    <form method="post">
+        <div class="d-grid capture_btn">
+        <input id="toggle" name="toggle" type="hidden" value="stop">
+        <input class="btn btn-primary btn-lg btn-block" name="stop_button" type="submit" value="Stop"/>
+        </div>
+    </form>
+
+
+
+<div class="d-grid">
+<a class="btn btn-secondary btn-lg btn-block" href="/" role="button">Back</a>
+</div>
+
+
+{% endblock %}

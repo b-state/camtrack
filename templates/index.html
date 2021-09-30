@@ -1,0 +1,16 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="text-center text-white content-box rounded-2 ">
+    <span>To save a captured environment for later use, click the "Capture & Save" button. To load it afterwards, click "Load & Capture" and choose a pre-captured area.</span>
+</div>
+
+<div class="d-grid gap-3">
+
+
+<a href="capture" class="btn btn-primary btn-lg btn-block" role="button">CAPTURE</a>
+<a href="captureandsafe" class="btn btn-primary btn-lg btn-block" role="button">CAPTURE & SAVE</a>
+<a href="loadandcapture" class="btn btn-primary btn-lg btn-block" role="button">LOAD & CAPTURE</a>
+
+</div>
+{% endblock %}
