@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="text-center text-white content-box rounded-2 ">
-    <span>ZED will start capturing, check Unreal for position updates.</span>
+    <span>Enter a filename and press start. If none was provided, the current time and date will be used instead.</span>
 
 </div>
 
@@ -10,9 +10,14 @@
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="toggle" name="toggle" type="hidden" value="start">
+        <label class="text-white" for="fname">File name:</label>
+        <input class="textarea text-white" type="text" name="fname" value="{% if fname != None %}{{ fname }}{% endif %}" />
         <input class="btn btn-primary btn-lg btn-block" name="start_button" type="submit" value="Start"/>
     </div>
 </form>
+
+
+
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="toggle" name="toggle" type="hidden" value="stop">

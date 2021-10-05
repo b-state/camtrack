@@ -1,17 +1,18 @@
+import os
 import socket
 import struct
+import datetime
 
 import pyzed.sl as sl
 
 
-def main(toggle):
+def main(toggle, fname):
     # Create a Camera object
     zed = sl.Camera()
 
     # Create a InitParameters object and set configuration parameters
     init_params = sl.InitParameters()
     init_params.camera_resolution = sl.RESOLUTION.HD720  # Use HD720 video mode (default fps: 60)
-    # Use a right-handed Y-up coordinate system
     init_params.coordinate_system = sl.COORDINATE_SYSTEM.LEFT_HANDED_Z_UP
     init_params.coordinate_units = sl.UNIT.METER  # Set units in meters
 
@@ -32,7 +33,7 @@ def main(toggle):
     zed_sensors = sl.SensorsData()
     runtime_parameters = sl.RuntimeParameters()
 
-    position = [0] * 7
+    position = [0]*7
     ip = "192.168.178.31"
     port = 9696
 
@@ -74,12 +75,24 @@ def main(toggle):
                 print(struct.unpack("7f", payload), end="\r")
             else:
                 print(zed.grab(runtime_parameters))
-        # i += 1
     except KeyboardInterrupt:
         pass
 
-    # Close the camera
+    # Close the camera and safe map
+    print("Name der Datei ist: "+fname)
+    area_file = "./area/" + fname + ".area"
+
+    if not os.path.isdir("./area"):
+        os.makedirs("./area", exist_ok=True)
+
+    zed.save_area_map(area_file)
+
     zed.close()
+
+    if os.path.isfile(area_file):
+        print("Area file written: " + area_file)
+    else:
+        print("Area file could not be written")
 
 
 if __name__ == "__main__":
