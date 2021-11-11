@@ -1,6 +1,7 @@
 html body {
      background-color: #000;
      padding: 30px;
+     max-with: 800px;
 }
 
 .nav {

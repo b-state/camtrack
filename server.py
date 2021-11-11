@@ -10,10 +10,12 @@ app = Flask(__name__)
 
 toggle = Value("i", 1)
 
+ipaddress = "0.0.0.0"
+
 def zed_capture():
     global toggle
     toggle.value = 1
-    p = Process(target=only_capture, args=(toggle,))
+    p = Process(target=only_capture, args=(toggle, ipaddress))
     p.start()
     print("Tracking should have started")
     pass
@@ -32,9 +34,17 @@ def zed_stop():
     toggle.value = 0
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("index.html")
+    global ipaddress
+
+    if request.form.get("set_ip") == "SET IP":
+        ipaddress = request.form.get("ipaddress")
+
+    print("Address is:",ipaddress)
+
+
+    return render_template("index.html", ipaddress=ipaddress)
 
 
 @app.route("/capture", methods=['GET', 'POST'])

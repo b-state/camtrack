@@ -5,9 +5,17 @@
     <span>To save a captured environment for later use, click the "Capture & Save" button. To load it afterwards, click "Load & Capture" and choose a pre-captured area.</span>
 </div>
 
+<form method="post">
+    <div class="d-grid capture_btn">
+        <label class="text-white" for="ipaddress">Destination IP adress:</label>
+        <input class="textarea text-white" type="text" id= "ipaddress" name="ipaddress" value="{% if ipaddress != None %}{{ ipaddress }}{% endif %}" />
+        <input class="btn btn-secondary btn-lg btn-block" name="set_ip" type="submit" value="SET IP"/>
+
+    </div>
+</form>
+
 <div class="d-grid gap-3">
-
-
+<br>
 <a href="capture" class="btn btn-primary btn-lg btn-block" role="button">CAPTURE</a>
 <a href="capture_and_safe" class="btn btn-primary btn-lg btn-block" role="button">CAPTURE & SAVE</a>
 <a href="loadandcapture" class="btn btn-primary btn-lg btn-block" role="button">LOAD & CAPTURE</a>

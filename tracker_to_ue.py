@@ -2,11 +2,32 @@ import os
 import socket
 import struct
 import datetime
+import click
 
 import pyzed.sl as sl
 
+area_file = ""
+
+def save_area():
+    area_file = "./area/" + datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + ".area"
+
+    if not os.path.isdir("./area"):
+        os.makedirs("./area", exist_ok=True)
+
+    zed.save_area_map(area_file)
+
+def area_written():
+    if os.path.isfile(area_file):
+        print("Area file written: " + area_file)
+    else:
+        print("Area file could not be written")
+
+
 
 def main():
+
+    y_pressed = click.confirm("Save .area file?")
+
     # Create a Camera object
     zed = sl.Camera()
 
@@ -79,19 +100,14 @@ def main():
         pass
 
     # Close the camera and safe map
-    area_file = "./area/" + datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + ".area"
-
-    if not os.path.isdir("./area"):
-        os.makedirs("./area", exist_ok=True)
-
-    zed.save_area_map(area_file)
+    if y_pressed:
+        save_area()
 
     zed.close()
 
-    if os.path.isfile(area_file):
-        print("Area file written: " + area_file)
-    else:
-        print("Area file could not be written")
+    area_written()
+
+
 
 
 if __name__ == "__main__":
