@@ -4,7 +4,7 @@ import struct
 import pyzed.sl as sl
 
 
-def main(toggle, ipadress):
+def main(toggle, ipaddress):
     # Create a Camera object
     zed = sl.Camera()
 
@@ -33,7 +33,7 @@ def main(toggle, ipadress):
     runtime_parameters = sl.RuntimeParameters()
 
     position = [0] * 7
-    ip = ipadress
+    ip = ipaddress
     port = 9696
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

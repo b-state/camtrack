@@ -15,7 +15,7 @@ ipaddress = "0.0.0.0"
 def zed_capture():
     global toggle
     toggle.value = 1
-    p = Process(target=only_capture, args=(toggle, ipaddress))
+    p = Process(target=only_capture, args=(toggle, ipaddress), name="ZED Capture")
     p.start()
     print("Tracking should have started")
     pass
@@ -23,7 +23,7 @@ def zed_capture():
 def zed_capture_and_safe(fname):
     global toggle
     toggle.value = 1
-    p = Process(target=cands, args=(toggle, fname))
+    p = Process(target=cands, args=(toggle, fname), name="ZED Capture And Safe")
     p.start()
     print("Tracking should have started")
     pass
