@@ -1,9 +1,9 @@
+import os
 from multiprocessing import Process, Value
 
 from flask import Flask, request, render_template
 
 from capture import main as only_capture
-
 from capture_and_safe import main as cands
 
 app = Flask(__name__)
@@ -11,6 +11,7 @@ app = Flask(__name__)
 toggle = Value("i", 1)
 
 ipaddress = "0.0.0.0"
+
 
 def zed_capture():
     global toggle
@@ -69,3 +70,12 @@ def capture_and_safe():
         zed_stop()
 
     return render_template("capture_and_safe.html", fname=fname)
+
+
+@app.route("/settings", methods=['GET', 'POST'])
+def settings():
+    if request.form.get("action") == "restart":
+        os.system('systemctl restart')
+    if request.form.get("action") == "shutdown":
+        os.system('systemctl restart')
+    return render_template("settings.html")

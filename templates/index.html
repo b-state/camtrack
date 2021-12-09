@@ -7,10 +7,9 @@
 
 <form method="post">
     <div class="d-grid capture_btn">
-        <label class="text-white" for="ipaddress">Destination IP adress:</label>
+        <label class="text-white" for="ipaddress">IP address of the Unreal Engine workstation:</label>
         <input class="textarea text-white" type="text" id= "ipaddress" name="ipaddress" value="{% if ipaddress != None %}{{ ipaddress }}{% endif %}" />
         <input class="btn btn-secondary btn-lg btn-block" name="set_ip" type="submit" value="SET IP"/>
-
     </div>
 </form>
 
@@ -19,6 +18,5 @@
 <a href="capture" class="btn btn-primary btn-lg btn-block" role="button">CAPTURE</a>
 <a href="capture_and_safe" class="btn btn-primary btn-lg btn-block" role="button">CAPTURE & SAVE</a>
 <a href="loadandcapture" class="btn btn-primary btn-lg btn-block" role="button">LOAD & CAPTURE</a>
-
 </div>
 {% endblock %}
