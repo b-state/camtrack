@@ -75,9 +75,9 @@ def capture_and_safe():
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
     if request.form.get("action") == "restart":
-        os.system('systemctl restart')
+        os.system('sudo restart')
     if request.form.get("action") == "shutdown":
-        os.system('systemctl restart')
+        os.system('sudo poweroff')
     return render_template("settings.html")
 
 
