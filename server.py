@@ -1,4 +1,4 @@
-import os
+import os, time
 from multiprocessing import Process, Value
 
 from flask import Flask, request, render_template
@@ -78,6 +78,11 @@ def settings():
         os.system('sudo restart')
     if request.form.get("action") == "shutdown":
         os.system('sudo poweroff')
+    if request.form.get("action") == "update":
+        os.system('cd camtrack/')
+        os.system('git pull origin master')
+        time.sleep(10)
+        os.system('sudo restart')
     return render_template("settings.html")
 
 
