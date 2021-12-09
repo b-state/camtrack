@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="text-center text-white content-box rounded-2 ">
-    <span>To update the ZED Navigator, you need to connect it to the internet, for e.g. via ethernet. Then click on "Update and Restart". Tracking will stop and the ZED Navigator may be offline for a few minutes. An update will pull the latest files from the <a href="https://github.com/philippbenner/camtrack" target="_blank">Github repository</a>.</span>
+    To update the ZED Navigator, you need to connect it to the internet, for e.g. via ethernet. Then click on "Update and Restart". Tracking will stop and the ZED Navigator may be offline for a few minutes. An update will pull the latest files from the <a href="https://github.com/philippbenner/camtrack" target="_blank">Github repository</a>.<br> Or remote connect to the Jetson terminal via ssh:<br> nano@1.1.1.1 | Password: nano
 </div>
 <br>
 
@@ -26,11 +26,8 @@
         <input class="btn btn-primary btn-lg btn-block" name="update_button" type="submit" value="Update & Restart"/>
     </div>
 </form>
-<br>
-<div class="d-grid">
-    <a class="btn btn-secondary btn-lg btn-block" href="/ssh_connection" role="button">Remote connect to Jetson</a>
-</div>
 
+<br>
 <div class="d-grid">
     <a class="btn btn-secondary btn-lg btn-block" href="/" role="button">Back</a>
 </div>

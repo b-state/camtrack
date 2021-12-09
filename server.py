@@ -80,6 +80,4 @@ def settings():
         os.system('systemctl restart')
     return render_template("settings.html")
 
-@app.route("/settings", methods=['GET', 'POST'])
-def ssh_connection():
-    return render_template("ssh_connection.html")
+
