@@ -79,7 +79,7 @@ def settings():
     if request.form.get("action") == "shutdown":
         os.system('sudo poweroff')
     if request.form.get("action") == "update":
-        repo = git.Repo(./camtrack/)
+        repo = git.Repo("/home/nano/camtrack/")
         repo.remotes.origin.pull()
         time.sleep(10)
         os.system('sudo restart')
