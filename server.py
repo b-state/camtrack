@@ -13,6 +13,7 @@ toggle = Value("i", 1)
 ipaddress = "0.0.0.0"
 
 safe_map = False
+load_map = False
 
 fname = None
 
@@ -79,6 +80,13 @@ def capture_and_safe():
         safe_map = False
 
     return render_template("capture_and_safe.html", fname=fname)
+
+@app.route("/load_and_capture", methods=['GET', 'POST'])
+def load_and_capture():
+
+
+    return render_template("capture_and_safe.html", fname=fname)
+
 
 
 @app.route("/settings", methods=['GET', 'POST'])
