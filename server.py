@@ -12,22 +12,28 @@ toggle = Value("i", 1)
 
 ipaddress = "0.0.0.0"
 
+safe_map = False
+
+fname = None
+
+
+
 
 def zed_capture():
     global toggle
     toggle.value = 1
-    p = Process(target=only_capture, args=(toggle, ipaddress), name="ZED Capture")
+    p = Process(target=only_capture, args=(toggle, ipaddress, safe_map, fname), name="ZED Capture")
     p.start()
     print("Tracking should have started")
     pass
 
-def zed_capture_and_safe(fname):
-    global toggle
-    toggle.value = 1
-    p = Process(target=cands, args=(toggle, fname), name="ZED Capture And Safe")
-    p.start()
-    print("Tracking should have started")
-    pass
+# def zed_capture_and_safe(fname):
+#     global toggle
+#     toggle.value = 1
+#     p = Process(target=cands, args=(toggle, fname), name="ZED Capture And Safe")
+#     p.start()
+#     print("Tracking should have started")
+#     pass
 
 
 def zed_stop():
@@ -44,7 +50,6 @@ def index():
 
     print("Address is:",ipaddress)
 
-
     return render_template("index.html", ipaddress=ipaddress)
 
 
@@ -60,14 +65,18 @@ def capture():
 
 @app.route("/capture_and_safe", methods=['GET', 'POST'])
 def capture_and_safe():
-
+    global fname
+    global safe_map
     fname = request.form.get("fname")
+
+    safe_map = True
 
     if request.form.get("toggle") == "start":
         print(fname)
-        zed_capture_and_safe(fname)
+        zed_capture()
     if request.form.get("toggle") == "stop":
         zed_stop()
+        safe_map = False
 
     return render_template("capture_and_safe.html", fname=fname)
 

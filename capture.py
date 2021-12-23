@@ -1,10 +1,13 @@
 import socket
 import struct
+import os
+import datetime
 
 import pyzed.sl as sl
 
+fname = ""
 
-def main(toggle, ipaddress):
+def main(toggle, ipaddress, safe_map, file_name):
     # Create a Camera object
     zed = sl.Camera()
 
@@ -68,18 +71,47 @@ def main(toggle, ipaddress):
                 position[4] = oy
                 position[5] = oz
                 position[6] = ow
+                #position[6] = datetime.datetime.now().timestamp()
 
                 payload = struct.pack("7f", *position)
                 sock.sendto(payload, (ip, port))
-                print(struct.unpack("7f", payload), end="\r")
+                #print(struct.unpack("7f", payload), end="\r")
             else:
                 print(zed.grab(runtime_parameters))
         # i += 1
     except KeyboardInterrupt:
         pass
+    # Close the camera and safe map if fname
 
-    # Close the camera
-    zed.close()
+    if safe_map:
+        print("File name:",file_name)
+        if file_name is "":
+            global fname
+            fname = str(datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
+            print("Fname",fname)
+
+        else:
+            fname = file_name
+
+
+        print("Name der Datei ist: " + fname)
+        area_file = "./area/" + fname + ".area"
+
+        if not os.path.isdir("./area"):
+            os.makedirs("./area", exist_ok=True)
+
+        zed.save_area_map(area_file)
+
+        zed.close()
+
+        if os.path.isfile(area_file):
+            print("Area file written: " + area_file)
+        else:
+            print("Area file could not be written")
+
+    else:
+        zed.close()
+
 
 
 if __name__ == "__main__":
