@@ -2,22 +2,26 @@
 
 {% block content %}
 <div class="text-center text-white content-box rounded-2 ">
-    <span>Select fa ile and press start.</span>
+    <span>Choose a file from which the camera can recognize its surrounding.</span>
 </div>
 
 
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="toggle" name="toggle" type="hidden" value="start">
-        <select class="form-select" aria-label="Default select example">
+        <p>
+        <select class="form-select" aria-label="Default select example" id="selection">
           <option selected>Select a file</option>
 
-            {% for user in users %}
-                <option value="1">One</option>
+            {% for file in filenames %}
+                <option value="{{loop.index}}">{{file}}</option>
             {% endfor %}
 
         </select>
+        </p>
+        <input class="btn btn-secondary btn-lg btn-block" name="set_file" type="submit" value="Set File"/>
         <input class="btn btn-primary btn-lg btn-block" name="start_button" type="submit" value="Start"/>
+
     </div>
 </form>
 

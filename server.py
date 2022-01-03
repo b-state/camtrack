@@ -1,10 +1,9 @@
-import os, time, git
+import git
+import os
+import time
 from multiprocessing import Process, Value
-
 from flask import Flask, request, render_template
-
 from capture import main as only_capture
-from capture_and_safe import main as cands
 
 app = Flask(__name__)
 
@@ -17,7 +16,7 @@ load_map = False
 
 fname = None
 
-
+project_path = os.path.dirname(os.path.realpath(__file__))
 
 
 def zed_capture():
@@ -28,18 +27,14 @@ def zed_capture():
     print("Tracking should have started")
     pass
 
-# def zed_capture_and_safe(fname):
-#     global toggle
-#     toggle.value = 1
-#     p = Process(target=cands, args=(toggle, fname), name="ZED Capture And Safe")
-#     p.start()
-#     print("Tracking should have started")
-#     pass
-
 
 def zed_stop():
     global toggle
     toggle.value = 0
+
+def get_dict_filenames(path):
+    for dirpath, dirnames, file_names in os.walk(path):
+        return file_names
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -49,7 +44,7 @@ def index():
     if request.form.get("set_ip") == "SET IP":
         ipaddress = request.form.get("ipaddress")
 
-    print("Address is:",ipaddress)
+    print("Address is:", ipaddress)
 
     return render_template("index.html", ipaddress=ipaddress)
 
@@ -81,12 +76,15 @@ def capture_and_safe():
 
     return render_template("capture_and_safe.html", fname=fname)
 
+
 @app.route("/load_and_capture", methods=['GET', 'POST'])
 def load_and_capture():
 
+    filenames = get_dict_filenames(os.path.join(project_path, "area"))
 
-    return render_template("capture_and_safe.html", fname=fname)
+    print(request.form.get("selection"))
 
+    return render_template("load_and_capture.html", filenames=filenames)
 
 
 @app.route("/settings", methods=['GET', 'POST'])
@@ -101,5 +99,3 @@ def settings():
         time.sleep(10)
         os.system('sudo restart')
     return render_template("settings.html")
-
-

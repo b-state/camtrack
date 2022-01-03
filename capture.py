@@ -7,6 +7,17 @@ import pyzed.sl as sl
 
 fname = ""
 
+def transform_pose(zed_pose, tx) :
+    transform_ = sl.Transform()
+    transform_.set_identity()
+    # Translate the tracking frame by tx along the X axis
+    transform_.m[0][3] = tx
+    # Pose(new reference frame) = M.inverse() * pose (camera frame) * M, where M is the transform between the two frames
+    transform_inv = sl.Transform()
+    transform_inv.init_matrix(transform_)
+    transform_inv.inverse()
+    zed_pose = transform_inv * zed_pose * transform_
+
 def main(toggle, ipaddress, safe_map, file_name):
     # Create a Camera object
     zed = sl.Camera()
@@ -41,6 +52,13 @@ def main(toggle, ipaddress, safe_map, file_name):
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+    # Get the distance between the center of the camera and the left eye
+    translation_left_to_center = zed.get_camera_information().calibration_parameters.T[0]
+
+    # Retrieve and transform the pose data into a new frame located at the center of the camera
+    tracking_state = zed.get_position(zed_pose, sl.REFERENCE_FRAME.WORLD)
+    transform_pose(zed_pose.pose_data(sl.Transform()), translation_left_to_center)
+
     try:
         while toggle.value == 1:
             if zed.grab(runtime_parameters) == sl.ERROR_CODE.SUCCESS:
@@ -48,6 +66,8 @@ def main(toggle, ipaddress, safe_map, file_name):
                 zed.get_position(zed_pose, sl.REFERENCE_FRAME.WORLD)
                 zed.get_sensors_data(zed_sensors, sl.TIME_REFERENCE.IMAGE)
                 zed_imu = zed_sensors.get_imu_data()
+                # Retrieve and transform the pose data into a new frame located at the center of the camera
+                transform_pose(zed_pose.pose_data(sl.Transform()), translation_left_to_center)
 
                 # Display the translation and timestamp
                 py_translation = sl.Translation()
@@ -78,9 +98,10 @@ def main(toggle, ipaddress, safe_map, file_name):
                 #print(struct.unpack("7f", payload), end="\r")
             else:
                 print(zed.grab(runtime_parameters))
-        # i += 1
+
     except KeyboardInterrupt:
         pass
+
     # Close the camera and safe map if fname
 
     if safe_map:
