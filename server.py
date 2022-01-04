@@ -13,8 +13,11 @@ ipaddress = "0.0.0.0"
 
 safe_map = False
 load_map = False
+load_file = None
 
 fname = None
+
+selection = None
 
 project_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -22,7 +25,7 @@ project_path = os.path.dirname(os.path.realpath(__file__))
 def zed_capture():
     global toggle
     toggle.value = 1
-    p = Process(target=only_capture, args=(toggle, ipaddress, safe_map, fname), name="ZED Capture")
+    p = Process(target=only_capture, args=(toggle, ipaddress, safe_map, fname, load_file), name="ZED Capture")
     p.start()
     print("Tracking should have started")
     pass
@@ -31,6 +34,7 @@ def zed_capture():
 def zed_stop():
     global toggle
     toggle.value = 0
+
 
 def get_dict_filenames(path):
     for dirpath, dirnames, file_names in os.walk(path):
@@ -80,11 +84,17 @@ def capture_and_safe():
 @app.route("/load_and_capture", methods=['GET', 'POST'])
 def load_and_capture():
 
+    global selection
+    global load_file
+
     filenames = get_dict_filenames(os.path.join(project_path, "area"))
+    selection = request.form.get("selection")
 
-    print(request.form.get("selection"))
+    if request.form.get("toggle") == "start":
+        load_file = selection
+        zed_capture()
 
-    return render_template("load_and_capture.html", filenames=filenames)
+    return render_template("load_and_capture.html", filenames=filenames, selection=selection)
 
 
 @app.route("/settings", methods=['GET', 'POST'])

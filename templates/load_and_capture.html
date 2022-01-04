@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="text-center text-white content-box rounded-2 ">
-    <span>Choose a file from which the camera can recognize its surrounding.</span>
+    <span>Choose a file from which the camera can recognize the environment.</span>
 </div>
 
 
@@ -10,18 +10,18 @@
     <div class="d-grid capture_btn">
         <input id="toggle" name="toggle" type="hidden" value="start">
         <p>
-        <select class="form-select" aria-label="Default select example" id="selection">
-          <option selected>Select a file</option>
+        <select class="form-select" aria-label="Default select" id="selection" name="selection">
+          <option selected>{% if selection != None %}{{ selection }}{% else %}Select a file{% endif %}</option>
 
             {% for file in filenames %}
-                <option value="{{loop.index}}">{{file}}</option>
+                <option value="{{file}}">{{file}}</option>
             {% endfor %}
 
         </select>
         </p>
         <input class="btn btn-secondary btn-lg btn-block" name="set_file" type="submit" value="Set File"/>
+        <p></p>
         <input class="btn btn-primary btn-lg btn-block" name="start_button" type="submit" value="Start"/>
-
     </div>
 </form>
 

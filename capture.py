@@ -18,7 +18,7 @@ def transform_pose(zed_pose, tx) :
     transform_inv.inverse()
     zed_pose = transform_inv * zed_pose * transform_
 
-def main(toggle, ipaddress, safe_map, file_name):
+def main(toggle, ipaddress, safe_map, file_name, load_file):
     # Create a Camera object
     zed = sl.Camera()
 
@@ -37,6 +37,12 @@ def main(toggle, ipaddress, safe_map, file_name):
     # Enable positional tracking with default parameters
     py_transform = sl.Transform()  # First create a Transform object for TrackingParameters object
     tracking_parameters = sl.PositionalTrackingParameters(_init_pos=py_transform)
+
+    # Load area map if provided
+    if load_file != None:
+        tracking_parameters.area_file_path = load_file
+        print("Area file used: ", load_file)
+
     err = zed.enable_positional_tracking(tracking_parameters)
     if err != sl.ERROR_CODE.SUCCESS:
         exit(1)
