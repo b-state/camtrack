@@ -1,4 +1,3 @@
-import git
 import os
 import time
 from multiprocessing import Process, Value
@@ -103,9 +102,9 @@ def settings():
         os.system('sudo restart')
     if request.form.get("action") == "shutdown":
         os.system('sudo poweroff')
-    if request.form.get("action") == "update":
-        repo = git.Repo("/home/nano/camtrack/")
-        repo.remotes.origin.pull()
-        time.sleep(10)
-        os.system('sudo restart')
+    # if request.form.get("action") == "update":
+    #     repo = git.Repo("/home/nano/camtrack/")
+    #     repo.remotes.origin.pull()
+    #     time.sleep(10)
+    #     os.system('sudo restart')
     return render_template("settings.html")
