@@ -2,12 +2,14 @@ import socket
 import struct
 import os
 import datetime
+import time
 
 import pyzed.sl as sl
 
 fname = ""
 
-def transform_pose(zed_pose, tx) :
+
+def transform_pose(zed_pose, tx):
     transform_ = sl.Transform()
     transform_.set_identity()
     # Translate the tracking frame by tx along the X axis
@@ -18,7 +20,8 @@ def transform_pose(zed_pose, tx) :
     transform_inv.inverse()
     zed_pose = transform_inv * zed_pose * transform_
 
-def main(toggle, ipaddress, safe_map, file_name, load_file):
+
+def main(toggle, ipaddress, safe_map, file_name, load_file, latency_test):
     # Create a Camera object
     zed = sl.Camera()
 
@@ -65,6 +68,9 @@ def main(toggle, ipaddress, safe_map, file_name, load_file):
     tracking_state = zed.get_position(zed_pose, sl.REFERENCE_FRAME.WORLD)
     transform_pose(zed_pose.pose_data(sl.Transform()), translation_left_to_center)
 
+    if latency_test:
+        print("latency test enabled")
+
     try:
         while toggle.value == 1:
             if zed.grab(runtime_parameters) == sl.ERROR_CODE.SUCCESS:
@@ -90,18 +96,24 @@ def main(toggle, ipaddress, safe_map, file_name, load_file):
                 ow = round(zed_pose.get_orientation(py_orientation).get()[3], 3)
                 # print("Orientation: Ox: {0}, Oy: {1}, Oz {2}, Ow: {3}\n".format(ox, oy, oz, ow))
 
-                position[0] = tx
-                position[1] = ty
-                position[2] = tz
-                position[3] = ox
-                position[4] = oy
-                position[5] = oz
-                position[6] = ow
-                #position[6] = datetime.datetime.now().timestamp()
+                if latency_test:
+                    data = time.time()
+                    payload = struct.pack("1f", data)
+                    sock.sendto(payload, (ip, port))
+                    print(struct.unpack("1f", payload))
 
-                payload = struct.pack("7f", *position)
-                sock.sendto(payload, (ip, port))
-                #print(struct.unpack("7f", payload), end="\r")
+                else:
+                    position[0] = tx
+                    position[1] = ty
+                    position[2] = tz
+                    position[3] = ox
+                    position[4] = oy
+                    position[5] = oz
+                    position[6] = ow
+
+                    payload = struct.pack("7f", *position)
+                    sock.sendto(payload, (ip, port))
+                    # print(struct.unpack("7f", payload), end="\r")
             else:
                 print(zed.grab(runtime_parameters))
 
@@ -111,15 +123,14 @@ def main(toggle, ipaddress, safe_map, file_name, load_file):
     # Close the camera and safe map if fname
 
     if safe_map:
-        print("File name:",file_name)
-        if file_name is "":
+        print("File name:", file_name)
+        if file_name == "":
             global fname
             fname = str(datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
-            print("Fname",fname)
+            print("Fname", fname)
 
         else:
             fname = file_name
-
 
         print("Name der Datei ist: " + fname)
         area_file = "./area/" + fname + ".area"
@@ -138,7 +149,6 @@ def main(toggle, ipaddress, safe_map, file_name, load_file):
 
     else:
         zed.close()
-
 
 
 if __name__ == "__main__":

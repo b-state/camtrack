@@ -13,10 +13,9 @@ ipaddress = "0.0.0.0"
 safe_map = False
 load_map = False
 load_file = None
-
 fname = None
-
 selection = None
+latency_test = False
 
 project_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -24,7 +23,7 @@ project_path = os.path.dirname(os.path.realpath(__file__))
 def zed_capture():
     global toggle
     toggle.value = 1
-    p = Process(target=only_capture, args=(toggle, ipaddress, safe_map, fname, load_file), name="ZED Capture")
+    p = Process(target=only_capture, args=(toggle, ipaddress, safe_map, fname, load_file, latency_test), name="ZED Capture")
     p.start()
     print("Tracking should have started")
     pass
@@ -98,13 +97,25 @@ def load_and_capture():
 
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
-    if request.form.get("action") == "restart":
+
+    global latency_test
+
+    if request.form.get("toggle") == "restart":
         os.system('sudo restart')
-    if request.form.get("action") == "shutdown":
+
+    if request.form.get("toggle") == "shutdown":
         os.system('sudo poweroff')
+
     # if request.form.get("action") == "update":
     #     repo = git.Repo("/home/nano/camtrack/")
     #     repo.remotes.origin.pull()
     #     time.sleep(10)
     #     os.system('sudo restart')
+
+    if request.form.get("toggle") == "latency_test":
+        latency_test = True
+        zed_capture()
+    if request.form.get("toggle") == "latency_test_stop":
+        latency_test = False
+        zed_stop()
     return render_template("settings.html")
