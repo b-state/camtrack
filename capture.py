@@ -98,9 +98,11 @@ def main(toggle, ipaddress, safe_map, file_name, load_file, latency_test):
 
                 if latency_test:
                     data = time.time()
-                    payload = struct.pack("1f", data)
+                    #print(data)
+                    payload = struct.pack("1d", data)
+                    #print(payload)
                     sock.sendto(payload, (ip, port))
-                    print(struct.unpack("1f", payload))
+                    #print(struct.unpack("1d", payload))
 
                 else:
                     position[0] = tx
