@@ -1,12 +1,12 @@
 {% extends "layouts/main.html" %}
 {% block content %}
 
-# Site description
+<!-- Site description -->
 <div class="text-center text-white content-box rounded-2 ">
     <span>Choose a file from which the camera can recognize the environment.</span>
 </div>
 
-# File name selection and start button
+<!-- File name selection and start button -->
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="toggle" name="toggle" type="hidden" value="start">
@@ -26,7 +26,7 @@
     </div>
 </form>
 
-# Stop button
+<!-- Stop button -->
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="toggle" name="toggle" type="hidden" value="stop">
@@ -34,7 +34,7 @@
     </div>
 </form>
 
-# Back button
+<!-- Back button -->
 <div class="d-grid">
     <br>
     <a class="btn btn-secondary btn-lg btn-block" href="/" role="button">Back</a>
