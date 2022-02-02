@@ -54,7 +54,7 @@ You don't need to configure a tracking device, just use the Jetson Nano.
 1. Plug the ZED Camera into the Jetson Nano
 2. Start it up for about a minute
 3. Connect to the "ZED NAVI" WIFI network
-4. Visit the URL 0.0.0.0
+4. Visit the URL 1.1.1.1
 5. Set your IP address
 6. Click on "Capture"
 7. Start capturing
