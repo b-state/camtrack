@@ -26,7 +26,7 @@ Hochschule der Medien students please see the steps at the end of this file.
 2. Build the pyzed Python module
 
 ### Unreal Engine Workstation
-1. Install the UDPCommunication plugin by copy & pasting it to `Unreal Projects\{your project}\Plugins`
+1. Install the UDPCommunication plugin by copy & pasting the whole folder to `Unreal Projects\{your project}\Plugins`
 2. Copy the `unreal/ZED_Cam.uasset` into your Unreal Engine content folder and restart Unreal Engine.
 
 ## How to track
