@@ -33,7 +33,7 @@ Hochschule der Medien students please see the steps at the end of this file.
 Hochschule der Medien students please see the steps at the end of this file.
 
 1. Plug in the ZED 2 camera
-2. Start a terminal:
+2. Start a terminal and:
 
     ```
     > cd path\to\camtrack
