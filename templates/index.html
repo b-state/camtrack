@@ -1,10 +1,12 @@
 {% extends "layouts/main.html" %}
-
 {% block content %}
+
+# Site description
 <div class="text-center text-white content-box rounded-2 ">
     <span>To save a captured environment for later use, click the "Capture & Save" button. To load it afterwards, click "Load & Capture" and choose a pre-captured area.</span>
 </div>
 
+# Set ip address button
 <form method="post">
     <div class="d-grid capture_btn">
         <label class="text-white" for="ipaddress">IP address of the Unreal Engine workstation:</label>
@@ -13,10 +15,12 @@
     </div>
 </form>
 
+# Capture buttons
 <div class="d-grid gap-3">
 <br>
 <a href="capture" class="btn btn-primary btn-lg btn-block" role="button">CAPTURE</a>
-<a href="capture_and_safe" class="btn btn-primary btn-lg btn-block" role="button">CAPTURE & SAVE</a>
+<a href="capture_and_save" class="btn btn-primary btn-lg btn-block" role="button">CAPTURE & SAVE</a>
 <a href="load_and_capture" class="btn btn-primary btn-lg btn-block" role="button">LOAD & CAPTURE</a>
 </div>
+
 {% endblock %}

@@ -1,12 +1,12 @@
 {% extends "layouts/main.html" %}
-
 {% block content %}
+
+# Site description
 <div class="text-center text-white content-box rounded-2 ">
     <span>Enter a filename and press start. If none was provided, the current time and date will be used instead.</span>
-
 </div>
 
-
+# Input for file name and start button
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="toggle" name="toggle" type="hidden" value="start">
@@ -16,8 +16,7 @@
     </div>
 </form>
 
-
-
+# Stop button
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="toggle" name="toggle" type="hidden" value="stop">
@@ -25,11 +24,10 @@
     </div>
 </form>
 
-
+# Back button
 <div class="d-grid">
     <br>
     <a class="btn btn-secondary btn-lg btn-block" href="/" role="button">Back</a>
 </div>
-
 
 {% endblock %}

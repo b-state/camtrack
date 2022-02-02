@@ -1,18 +1,20 @@
 {% extends "layouts/main.html" %}
-
 {% block content %}
+
+# Site description
 <div class="text-center text-white content-box rounded-2 ">
     <span>ZED will start capturing, check Unreal for position updates.</span>
-
 </div>
 
-
+# Start button
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="toggle" name="toggle" type="hidden" value="start">
         <input class="btn btn-primary btn-lg btn-block" name="start_button" type="submit" value="Start"/>
     </div>
 </form>
+
+# Stop butten
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="toggle" name="toggle" type="hidden" value="stop">
@@ -20,11 +22,10 @@
     </div>
 </form>
 
-
+# Back button
 <div class="d-grid">
     <br>
     <a class="btn btn-secondary btn-lg btn-block" href="/" role="button">Back</a>
 </div>
-
 
 {% endblock %}

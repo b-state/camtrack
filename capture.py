@@ -9,6 +9,7 @@ import pyzed.sl as sl
 fname = ""
 
 
+# translate origin to center of cam
 def transform_pose(zed_pose, tx):
     transform_ = sl.Transform()
     transform_.set_identity()
@@ -21,7 +22,7 @@ def transform_pose(zed_pose, tx):
     zed_pose = transform_inv * zed_pose * transform_
 
 
-def main(toggle, ipaddress, safe_map, file_name, load_file, latency_test):
+def main(toggle, ipaddress, save_map, file_name, load_file, latency_test):
     # Create a Camera object
     zed = sl.Camera()
 
@@ -51,14 +52,13 @@ def main(toggle, ipaddress, safe_map, file_name, load_file, latency_test):
         exit(1)
 
     zed_pose = sl.Pose()
-
     zed_sensors = sl.SensorsData()
     runtime_parameters = sl.RuntimeParameters()
 
+    # initialise variables for udp
     position = [0] * 7
     ip = ipaddress
     port = 9696
-
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     # Get the distance between the center of the camera and the left eye
@@ -68,6 +68,7 @@ def main(toggle, ipaddress, safe_map, file_name, load_file, latency_test):
     tracking_state = zed.get_position(zed_pose, sl.REFERENCE_FRAME.WORLD)
     transform_pose(zed_pose.pose_data(sl.Transform()), translation_left_to_center)
 
+    # check if logging enabled
     if latency_test:
         print("latency test enabled")
 
@@ -86,7 +87,6 @@ def main(toggle, ipaddress, safe_map, file_name, load_file, latency_test):
                 tx = round(zed_pose.get_translation(py_translation).get()[0], 3)
                 ty = round(zed_pose.get_translation(py_translation).get()[1], 3)
                 tz = round(zed_pose.get_translation(py_translation).get()[2], 3)
-                # print("Translation: Tx: {0}, Ty: {1}, Tz {2}, Timestamp: {3}".format(tx, ty, tz, zed_pose.timestamp.get_milliseconds()), end="\r")
 
                 # Display the orientation quaternion
                 py_orientation = sl.Orientation()
@@ -94,17 +94,15 @@ def main(toggle, ipaddress, safe_map, file_name, load_file, latency_test):
                 oy = round(zed_pose.get_orientation(py_orientation).get()[1], 3)
                 oz = round(zed_pose.get_orientation(py_orientation).get()[2], 3)
                 ow = round(zed_pose.get_orientation(py_orientation).get()[3], 3)
-                # print("Orientation: Ox: {0}, Oy: {1}, Oz {2}, Ow: {3}\n".format(ox, oy, oz, ow))
 
+                # send timestamp for logging
                 if latency_test:
                     data = time.time()
-                    #print(data)
                     payload = struct.pack("1d", data)
-                    #print(payload)
                     sock.sendto(payload, (ip, port))
-                    #print(struct.unpack("1d", payload))
 
                 else:
+                    # assign translation and rotation and send via udp
                     position[0] = tx
                     position[1] = ty
                     position[2] = tz
@@ -115,35 +113,40 @@ def main(toggle, ipaddress, safe_map, file_name, load_file, latency_test):
 
                     payload = struct.pack("7f", *position)
                     sock.sendto(payload, (ip, port))
-                    # print(struct.unpack("7f", payload), end="\r")
             else:
                 print(zed.grab(runtime_parameters))
 
     except KeyboardInterrupt:
         pass
 
-    # Close the camera and safe map if fname
-
-    if safe_map:
+    # Close the camera and save map
+    if save_map:
         print("File name:", file_name)
+
+        # check if file name is set by user, if empty, set current time as file name
+        # This should be rewritten, global variable not needed I guess
         if file_name == "":
             global fname
             fname = str(datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
             print("Fname", fname)
-
         else:
             fname = file_name
 
         print("Name der Datei ist: " + fname)
+
+        # construct file name
         area_file = "./area/" + fname + ".area"
 
+        # check if area folder is exists, if not, make one
         if not os.path.isdir("./area"):
             os.makedirs("./area", exist_ok=True)
 
+        # save map
         zed.save_area_map(area_file)
 
         zed.close()
 
+        # check if area file has been written
         if os.path.isfile(area_file):
             print("Area file written: " + area_file)
         else:

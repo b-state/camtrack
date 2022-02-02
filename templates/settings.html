@@ -1,11 +1,13 @@
 {% extends "layouts/main.html" %}
-
 {% block content %}
+
+# Site description
 <div class="text-center text-white content-box rounded-2 ">
     To update the ZED Navigator, you need to connect it to the internet, for e.g. via ethernet. Then click on "Update and Restart" (under development). Tracking will stop and the ZED Navigator may be offline for a few minutes. An update will pull the latest files from the <a href="https://github.com/philippbenner/camtrack" target="_blank">Github repository</a>.<br> Or remote connect to the Jetson terminal via ssh:<br> nano@1.1.1.1 | Password: nano
 </div>
 <br>
 
+# Restart button
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="action" name="toggle" type="hidden" value="restart">
@@ -13,6 +15,7 @@
     </div>
 </form>
 
+# Shutdown button
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="action" name="toggle" type="hidden" value="shutdown">
@@ -21,6 +24,7 @@
 </form>
 <br>
 
+# Start Latency test button
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="action" name="toggle" type="hidden" value="latency_test">
@@ -28,7 +32,7 @@
     </div>
 </form>
 
-
+# Stop Latency test button
 <form method="post">
     <div class="d-grid capture_btn">
         <input id="action" name="toggle" type="hidden" value="latency_test_stop">
@@ -37,17 +41,10 @@
 </form>
 <br>
 
-<!--<form method="post">-->
-<!--    <div class="d-grid capture_btn">-->
-<!--        <input id="action" name="toggle" type="hidden" value="update">-->
-<!--        <input class="btn btn-primary btn-lg btn-block" name="update_button" type="submit" value="Update & Restart"/>-->
-<!--    </div>-->
-<!--</form>-->
-
+# Back button
 <div class="d-grid">
     <a class="btn btn-secondary btn-lg btn-block" href="/" role="button">Back</a>
 </div>
 <br>
-
 
 {% endblock %}

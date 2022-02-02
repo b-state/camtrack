@@ -78,7 +78,7 @@ def main(toggle, fname):
     except KeyboardInterrupt:
         pass
 
-    # Close the camera and safe map
+    # Close the camera and save map
     print("Name der Datei ist: "+fname)
     area_file = "./area/" + fname + ".area"
 
