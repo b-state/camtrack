@@ -1,6 +1,6 @@
 # Live Camera Tracking With ZED 2 For Unreal Engine
 
-![ZED Navigator Web Interface](https://imgur.com/a/rEHmD3F)
+![ZED Navigator Web Interface](https://i.imgur.com/92KRVA0.jpg)
 
 ## Introduction
 This repo provides a web application to use the Stereolabs ZED 2 camera for live camera tracking in Unreal Engine.
