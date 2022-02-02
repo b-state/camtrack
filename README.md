@@ -14,7 +14,7 @@ It was created during a university project and should be used with the customize
 - Python v3.8.8
 - Python modules found in `python/requirements.txt`
 - Unreal Engine v4.27
-- Unreal Engine Plugin: [UDPCommunication](https://github.com/is-centre/udp-ue4-plugin-win64)"
+- Unreal Engine Plugin: [UDPCommunication](https://github.com/is-centre/udp-ue4-plugin-win64)
 
 Newer versions of Python and Unreal Engine may be supported, but are not tested.
 
