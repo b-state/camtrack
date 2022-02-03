@@ -1,5 +1,6 @@
 # Live Camera Tracking With ZED 2 For Unreal Engine
 
+![ZED2 With Jetson Nano](https://i.imgur.com/QYQj3cN.jpg)
 ![ZED Navigator Web Interface](https://i.imgur.com/92KRVA0.jpg)
 
 ## Introduction
