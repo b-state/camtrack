@@ -1,5 +1,8 @@
 # Live Camera Tracking With ZED 2 For Unreal Engine
 
+![ZED2 With Jetson Nano](https://i.imgur.com/0IJDyME.png)
+![ZED Navigator Web Interface](https://i.imgur.com/92KRVA0.jpg)
+
 ## Introduction
 This repo provides a web application to use the Stereolabs ZED 2 camera for live camera tracking in Unreal Engine.
 It was created during a university project and should be used with the customized Nvidia Jetson Nano from Hochschule der Medien for wireless tracking. 
@@ -12,7 +15,7 @@ It was created during a university project and should be used with the customize
 - Python v3.8.8
 - Python modules found in `python/requirements.txt`
 - Unreal Engine v4.27
-- Unreal Engine Plugin: [UDPCommunication](https://github.com/is-centre/udp-ue4-plugin-win64)"
+- Unreal Engine Plugin: [UDPCommunication](https://github.com/is-centre/udp-ue4-plugin-win64)
 
 Newer versions of Python and Unreal Engine may be supported, but are not tested.
 
@@ -24,14 +27,14 @@ Hochschule der Medien students please see the steps at the end of this file.
 2. Build the pyzed Python module
 
 ### Unreal Engine Workstation
-1. Install the UDPCommunication plugin by copy & pasting it to `Unreal Projects\{your project}\Plugins`
+1. Install the UDPCommunication plugin by copy & pasting the whole folder to `Unreal Projects\{your project}\Plugins`
 2. Copy the `unreal/ZED_Cam.uasset` into your Unreal Engine content folder and restart Unreal Engine.
 
 ## How to track
 Hochschule der Medien students please see the steps at the end of this file.
 
 1. Plug in the ZED 2 camera
-2. Start `CMD`:
+2. Start a terminal and:
 
     ```
     > cd path\to\camtrack
@@ -52,7 +55,7 @@ You don't need to configure a tracking device, just use the Jetson Nano.
 1. Plug the ZED Camera into the Jetson Nano
 2. Start it up for about a minute
 3. Connect to the "ZED NAVI" WIFI network
-4. Visit the URL 0.0.0.0
+4. Visit the URL 1.1.1.1
 5. Set your IP address
 6. Click on "Capture"
 7. Start capturing
