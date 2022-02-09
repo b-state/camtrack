@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body class="d-flex flex-column min-vh-100">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <div class="container ">
 
     <div class="d-flex row nav text-white rounded-2 ">
@@ -21,9 +22,8 @@
             </a>
         </div>
     </div>
-
-
     {%block content%}{% endblock %}
+
 </div>
 <footer class="mt-auto">
    <div class="align-self-end row nav text-white rounded-2 ">
