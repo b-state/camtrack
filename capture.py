@@ -44,7 +44,7 @@ def main(toggle, ipaddress, save_map, file_name, load_file, latency_test):
 
     # Load area map if provided
     if load_file != None:
-        tracking_parameters.area_file_path = load_file
+        tracking_parameters.area_file_path = os.path.realpath(__file__)[:-10] + "./area/" + load_file
         print("Area file used: ", load_file)
 
     err = zed.enable_positional_tracking(tracking_parameters)
@@ -135,11 +135,11 @@ def main(toggle, ipaddress, save_map, file_name, load_file, latency_test):
         print("Name der Datei ist: " + fname)
 
         # construct file name
-        area_file = "./area/" + fname + ".area"
+        area_file = os.path.realpath(__file__)[:-10] + "./area/" + fname + ".area"
 
         # check if area folder is exists, if not, make one
-        if not os.path.isdir("./area"):
-            os.makedirs("./area", exist_ok=True)
+        if not os.path.isdir(os.path.realpath(__file__)[:-10] +"./area"):
+            os.makedirs(os.path.realpath(__file__)[:-10] +"./area", exist_ok=True)
 
         # save map
         zed.save_area_map(area_file)
