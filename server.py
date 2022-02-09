@@ -122,7 +122,7 @@ def settings():
     global latency_test
 
     if request.form.get("toggle") == "restart":
-        os.system('sudo restart')
+        os.system('sudo reboot')
 
     if request.form.get("toggle") == "shutdown":
         os.system('sudo poweroff')
