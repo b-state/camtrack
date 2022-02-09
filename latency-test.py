@@ -5,7 +5,9 @@ import os
 import datetime
 
 # set udp variables
-ip_address = "0.0.0.0"
+ip_address= input("IP Address:")
+if ip_address == None:
+    ip_address = "0.0.0.0"
 udp_port = 9696
 
 
@@ -52,19 +54,16 @@ try:
             print(f"Latency is:\n{time_diff:.4f} seconds\n"
                   f"{(time_diff * 1000):.2f} milliseconds\n"
                   f"{(time_diff / 0.02083333333):.2f} frames (180 degree shutter at 24 fps)\n"
-                  f"start {start_time}, end {end_time}"
+                  f"start {start_time}, end {end_time}\n"
                   f"Stop logging with {'Strg + C' if os.name == 'nt' else 'Strg + X'}")
 
             if enable_log == "y":
-                f = open(f"./latency-test-log/latency-test-log-{date}.txt", "a")
-                f.write(f"{time_diff:.4f} seconds\n"
-                        f"{(time_diff * 1000):.2f} milliseconds\n"
-                        f"{(time_diff / 0.02083333333):.2f} frames (180 degree shutter at 24 fps)\n\n")
+                with open(f"./latency-test-log/latency-test-log-{date}.txt", "a") as f:
+                    f.write(f"{time_diff:.4f} seconds\n"
+                            f"{(time_diff * 1000):.2f} milliseconds\n"
+                            f"{(time_diff / 0.02083333333):.2f} frames (180 degree shutter at 24 fps)\n\n")
 
             time.sleep(1)
             cls()
 except KeyboardInterrupt:
-    # close file
-    if enable_log == "y":
-        f.close()
     pass
