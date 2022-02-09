@@ -1,6 +1,8 @@
 import os
 from multiprocessing import Process, Value
+
 from flask import Flask, request, render_template
+
 from capture import main as only_capture
 
 app = Flask(__name__)
@@ -26,6 +28,7 @@ selection = None
 latency_test = False
 project_path = os.path.dirname(os.path.realpath(__file__))
 
+
 # The general procedure is that the methods get their values through a post request,
 # check the answer of the request and set variables accordingly
 
@@ -33,20 +36,24 @@ project_path = os.path.dirname(os.path.realpath(__file__))
 def zed_capture():
     global toggle
     toggle.value = 1
-    p = Process(target=only_capture, args=(toggle, ipaddress, save_map, fname, load_file, latency_test), name="ZED Capture")
+    p = Process(target=only_capture, args=(toggle, ipaddress, save_map, fname, load_file, latency_test),
+                name="ZED Capture")
     p.start()
     print("Tracking should have started")
     pass
+
 
 # stop tracking
 def zed_stop():
     global toggle
     toggle.value = 0
 
+
 # get file names for area map loading
 def get_dict_filenames(path):
     for dirpath, dirnames, file_names in os.walk(path):
         return file_names
+
 
 # start page, ip address of destination is required
 @app.route("/", methods=['GET', 'POST'])
@@ -96,7 +103,6 @@ def capture_and_save():
 # load a .area file and use it for tracking
 @app.route("/load_and_capture", methods=['GET', 'POST'])
 def load_and_capture():
-
     global selection
     global load_file
 
@@ -109,10 +115,10 @@ def load_and_capture():
 
     return render_template("load_and_capture.html", filenames=filenames, selection=selection)
 
+
 # settings menu
 @app.route("/settings", methods=['GET', 'POST'])
 def settings():
-
     global latency_test
 
     if request.form.get("toggle") == "restart":
