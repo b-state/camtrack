@@ -5,7 +5,7 @@ import os
 import datetime
 
 # set udp variables
-ip_adress = "0.0.0.0"
+ip_address = "0.0.0.0"
 udp_port = 9696
 
 
@@ -16,7 +16,7 @@ def cls():
 
 # set up udp
 client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-client.bind((ip_adress, udp_port))
+client.bind((ip_address, udp_port))
 
 # logging
 enable_log = input("save log to file? y/n ")
