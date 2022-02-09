@@ -1,7 +1,7 @@
 import os
 from multiprocessing import Process, Value
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_from_directory
 
 from capture import main as only_capture
 
@@ -53,6 +53,12 @@ def zed_stop():
 def get_dict_filenames(path):
     for dirpath, dirnames, file_names in os.walk(path):
         return file_names
+
+
+# favicon
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 # start page, ip address of destination is required
