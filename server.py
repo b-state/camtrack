@@ -119,6 +119,9 @@ def load_and_capture():
         load_file = selection
         zed_capture()
 
+    if request.form.get("toggle") == "stop":
+        zed_stop()
+
     return render_template("load_and_capture.html", filenames=filenames, selection=selection)
 
 
