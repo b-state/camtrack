@@ -1,0 +1,32 @@
+0.0222 seconds
+22.22 milliseconds
+1.07 frames (180 degree shutter at 24 fps)
+
+0.0222 seconds
+22.25 milliseconds
+1.07 frames (180 degree shutter at 24 fps)
+
+0.0172 seconds
+17.16 milliseconds
+0.82 frames (180 degree shutter at 24 fps)
+
+0.0195 seconds
+19.54 milliseconds
+0.94 frames (180 degree shutter at 24 fps)
+
+0.0203 seconds
+20.35 milliseconds
+0.98 frames (180 degree shutter at 24 fps)
+
+0.0079 seconds
+7.89 milliseconds
+0.38 frames (180 degree shutter at 24 fps)
+
+0.0034 seconds
+3.38 milliseconds
+0.16 frames (180 degree shutter at 24 fps)
+
+0.0228 seconds
+22.75 milliseconds
+1.09 frames (180 degree shutter at 24 fps)
+

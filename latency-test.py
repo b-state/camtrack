@@ -21,7 +21,8 @@ client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 client.bind((ip_address, udp_port))
 
 # logging
-enable_log = input("save log to file? y/n ")
+log_dir = os.path.realpath(__file__)[:-15] + "latency-test-logs"
+enable_log = input(f"Save log to {log_dir}? y/n ")
 date = str(datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
 
 print(f"Stop logging with {'Strg + C' if os.name == 'nt' else 'Strg + X'}")
@@ -57,7 +58,11 @@ try:
                   f"Stop logging with {'Strg + C' if os.name == 'nt' else 'Strg + X'}")
 
             if enable_log == "y":
-                with open(f"./latency-test-log/latency-test-log-{date}.txt", "a") as f:
+
+                if not os.path.isdir(log_dir):
+                    os.makedirs(log_dir, exist_ok=True)
+
+                with open(f"{log_dir}/latency-test-log-{date}.txt", "a") as f:
                     f.write(f"{time_diff:.4f} seconds\n"
                             f"{(time_diff * 1000):.2f} milliseconds\n"
                             f"{(time_diff / 0.02083333333):.2f} frames (180 degree shutter at 24 fps)\n\n")
