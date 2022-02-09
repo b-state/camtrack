@@ -54,7 +54,6 @@ try:
             print(f"Latency is:\n{time_diff:.4f} seconds\n"
                   f"{(time_diff * 1000):.2f} milliseconds\n"
                   f"{(time_diff / 0.02083333333):.2f} frames (180 degree shutter at 24 fps)\n"
-                  f"start {start_time}, end {end_time}\n"
                   f"Stop logging with {'Strg + C' if os.name == 'nt' else 'Strg + X'}")
 
             if enable_log == "y":
