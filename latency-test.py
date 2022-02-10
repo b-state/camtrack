@@ -54,7 +54,7 @@ try:
             # printing and saving logs
             print(f"Latency is:\n{time_diff:.4f} seconds\n"
                   f"{(time_diff * 1000):.2f} milliseconds\n"
-                  f"{(time_diff / 0.02083333333):.2f} frames (180 degree shutter at 24 fps)\n"
+                  f"{(time_diff / 0.04166666):.2f} frames (24 fps)\n"
                   f"Stop logging with {'Strg + C' if os.name == 'nt' else 'Strg + X'}")
 
             if enable_log == "y":
@@ -65,7 +65,7 @@ try:
                 with open(f"{log_dir}/latency-test-log-{date}.txt", "a") as f:
                     f.write(f"{time_diff:.4f} seconds\n"
                             f"{(time_diff * 1000):.2f} milliseconds\n"
-                            f"{(time_diff / 0.02083333333):.2f} frames (180 degree shutter at 24 fps)\n\n")
+                            f"{(time_diff / 0.04166666):.2f} frames (24 fps)\n\n")
 
             time.sleep(1)
             cls()
