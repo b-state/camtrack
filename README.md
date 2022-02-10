@@ -26,6 +26,8 @@ Hochschule der Medien students please see the steps at the end of this file.
 1. Install all dependencies
 2. Build the pyzed Python module
 
+Contact me, if you need a working Jetson Nano SD card image.
+
 ### Unreal Engine Workstation
 1. Install the UDPCommunication plugin by copy & pasting the whole folder to `Unreal Projects\{your project}\Plugins`
 2. Copy the `unreal/ZED_Cam.uasset` into your Unreal Engine content folder and restart Unreal Engine.
