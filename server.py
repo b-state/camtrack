@@ -135,7 +135,7 @@ def settings():
         os.system("systemctl reboot")
 
     if request.form.get("toggle") == "shutdown":
-        subprocess.call(["sudo", "shutdown", "-h", "now"])
+        subprocess.call(["sudo", "poweroff"])
 
     if request.form.get("toggle") == "latency_test":
         latency_test = True
