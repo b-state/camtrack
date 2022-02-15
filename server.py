@@ -132,10 +132,10 @@ def settings():
     global latency_test
 
     if request.form.get("toggle") == "restart":
-        subprocess.call(["reboot"])
+        subprocess.call(["bash", "reboot"])
 
     if request.form.get("toggle") == "shutdown":
-        subprocess.call(["poweroff"])
+        subprocess.call(["bash", "poweroff"])
 
     if request.form.get("toggle") == "latency_test":
         latency_test = True
