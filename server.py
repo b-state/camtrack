@@ -1,4 +1,5 @@
 import os
+import subprocess
 from multiprocessing import Process, Value
 
 from flask import Flask, request, render_template, send_from_directory
@@ -131,10 +132,10 @@ def settings():
     global latency_test
 
     if request.form.get("toggle") == "restart":
-        os.system("sudo reboot")
+        subprocess.call(["sudo","reboot"])
 
     if request.form.get("toggle") == "shutdown":
-        os.system("sudo poweroff")
+        subprocess.call(["sudo","poweroff"])
 
     if request.form.get("toggle") == "latency_test":
         latency_test = True
