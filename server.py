@@ -1,4 +1,5 @@
 import os
+import subprocess
 from multiprocessing import Process, Value
 
 from flask import Flask, request, render_template, send_from_directory
@@ -134,7 +135,7 @@ def settings():
         os.system("systemctl reboot")
 
     if request.form.get("toggle") == "shutdown":
-        os.system("systemctl poweroff")
+        subprocess.call(["sudo", "shutdown", "-h", "now"])
 
     if request.form.get("toggle") == "latency_test":
         latency_test = True
