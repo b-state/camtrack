@@ -29,6 +29,7 @@ def main(toggle, ipaddress, save_map, file_name, load_file, latency_test):
     # Create a InitParameters object and set configuration parameters
     init_params = sl.InitParameters()
     init_params.camera_resolution = sl.RESOLUTION.HD720  # Use HD720 video mode (default fps: 60)
+    init_params.depth_mode = sl.DEPTH_MODE.QUALITY
     # Use a right-handed Y-up coordinate system
     init_params.coordinate_system = sl.COORDINATE_SYSTEM.LEFT_HANDED_Z_UP
     init_params.coordinate_units = sl.UNIT.METER  # Set units in meters
